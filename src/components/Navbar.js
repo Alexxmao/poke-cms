@@ -1,4 +1,5 @@
-import { Link } from '@chakra-ui/react'
+import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ChakraLink } from '@chakra-ui/react'
 import { Text, Flex, Box } from '@chakra-ui/react'
 import { useState } from 'react'
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
@@ -11,7 +12,7 @@ const MenuItem = ({ children, isLast, to='/' }) => {
         display="block"
         color="black"
         >
-            <Link href={to}>{children}</Link>
+            <ChakraLink>{children}</ChakraLink>
         </Text>
     )
 }
@@ -45,10 +46,15 @@ const Header = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/">Home</MenuItem>
-          <MenuItem to="/about">ABOUT</MenuItem>
-          <MenuItem to="/shop">SHOP</MenuItem>
-          <MenuItem to="/contact" isLast>CONTACT</MenuItem>
+          <ReactRouterLink to="/">
+            <MenuItem>HOME</MenuItem>
+          </ReactRouterLink>
+          <ReactRouterLink to="/about">
+            <MenuItem>ABOUT</MenuItem>
+          </ReactRouterLink>
+          <ReactRouterLink to="/shop">
+            <MenuItem isLast>SHOP</MenuItem>
+          </ReactRouterLink>
         </Flex>
       </Box>
     </Flex>
