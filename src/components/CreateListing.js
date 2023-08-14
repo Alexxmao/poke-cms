@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 
@@ -13,12 +13,14 @@ export default function CreateListing() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://localhost:31337/api/', inputs);
+        axios.post('http://localhost:31337/api/listings/save', inputs);
+        console.log(inputs);
     }
 
     return (
         <div>
-            <FormControl onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+            <FormControl>
                 <FormLabel>Name</FormLabel>
                 <Input type="text" name="name" onChange={handleChange}/>
                 <FormLabel>Type</FormLabel>
@@ -30,8 +32,10 @@ export default function CreateListing() {
                 <FormLabel>Stock</FormLabel>
                 <Input type="number" name="stock" onChange={handleChange}/>
                 <FormLabel>Image</FormLabel>
-                <Input type="image" name="image" onChange={handleChange}/>
+                <Input type="file" name="image" onChange={handleChange}/>
+                <Button type="submit">Create Listing</Button>
             </FormControl>
+            </form>
         </div>
     )
 }

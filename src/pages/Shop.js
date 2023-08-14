@@ -1,5 +1,9 @@
+import CreateListing from "../components/CreateListing";
+
 export default function Shop(){
     return(
-        <div>shop</div>
+        <div>shop
+            <CreateListing/>
+        </div>
     )
 }
