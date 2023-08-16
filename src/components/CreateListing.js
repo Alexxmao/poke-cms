@@ -1,8 +1,11 @@
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
+    const navigate = useNavigate();
+
     const [inputs, setInputs] = useState({})
 
     const handleChange = (e) => {
@@ -13,7 +16,10 @@ export default function CreateListing() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:31337/api/listings/save', inputs);
+        axios.post('http://localhost:31337/api/listings/save', inputs).then((response) => {
+            console.log(response.data);
+            navigate('/');
+        });
         console.log(inputs);
     }
 
