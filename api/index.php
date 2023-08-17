@@ -7,13 +7,12 @@ header("Access-Control-Allow-Headers: *");
 require('connect.php');
 
 $method = $_SERVER['REQUEST_METHOD'];
-print_r($method);
 switch ($method) {
     case "GET":
         $query = "SELECT * FROM pokemon";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        $listings = $stmt->fetchALL();
+        $listings = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($listings);
         break;
     case "POST":
