@@ -49,9 +49,9 @@ const Header = (props) => {
           <ReactRouterLink to="/">
             <MenuItem>HOME</MenuItem>
           </ReactRouterLink>
-          <ReactRouterLink to="/about">
+          {/* <ReactRouterLink to="/about">
             <MenuItem>ABOUT</MenuItem>
-          </ReactRouterLink>
+          </ReactRouterLink> */}
           <ReactRouterLink to="/shop">
             <MenuItem isLast>SHOP</MenuItem>
           </ReactRouterLink>
