@@ -7,7 +7,7 @@ export default function Shop(){
     return(
         <div>
             <Flex alignContent='center' justifyContent='center'>
-                <VStack>
+                <VStack spacing={8}>
                     <Heading>Shop our Stock!</Heading>
                     <CreateListing/>
                 </VStack>
