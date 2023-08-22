@@ -78,7 +78,6 @@ export default function DisplayListing() {
                 <Stack>
                     <Select placeholder="Sort By" w={48} overflow='hidden' onChange={handleChange}>
                         <option value="name">Name</option>
-
                         <option value="date-asc">Latest</option>
                         <option value="date-desc">Oldest</option>
                         <option value="price-asc">Price: Ascending</option>
