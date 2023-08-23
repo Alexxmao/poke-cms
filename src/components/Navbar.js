@@ -1,5 +1,5 @@
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { Link as ChakraLink, textDecoration } from '@chakra-ui/react'
+import { Link as ChakraLink } from '@chakra-ui/react'
 import { Text, Flex, Box } from '@chakra-ui/react'
 
 const MenuItem = ({ children, isLast, to='/' }) => {

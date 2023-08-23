@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 
 require('connect.php');
 
@@ -17,6 +18,8 @@ switch ($method) {
         break;
     case "POST":
         $listing = json_decode(file_get_contents('php://input'));
+        $image = $_FILES['image']['tmp_name'];
+        echo $image;
         $query = "INSERT INTO pokemon(id, name, type, rarity, price, stock, image, created_at, updated_at) VALUES(null, :name, :type, :rarity, :price, :stock, :image, :created_at, :updated_at)";
         $stmt = $db->prepare($query);
 
@@ -34,6 +37,19 @@ switch ($method) {
             $response = ['status' => 1, 'message' => 'listing created'];
         } else {
             $response = ['status' => 0, 'message' => 'failed to create listing'];
+        }
+        echo json_encode($response);
+        break;
+    case "DELETE":
+        $query = "DELETE FROM pokemon WHERE id = :id";
+        $path = explode('/', $_SERVER['REQUEST_URI']);
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $path[3]);
+
+        if ($stmt->execute()) {
+            $response = ['status' => 1, 'message' => 'listing deleted'];
+        } else {
+            $response = ['status' => 0, 'message' => 'failed to delete listing'];
         }
         echo json_encode($response);
         break;
