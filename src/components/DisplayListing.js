@@ -1,19 +1,28 @@
-import { Box, HStack, Heading,
+import { Box, Stack, HStack, Heading,
         Image, SimpleGrid, Text,
         Button, Input, Flex,
-        Tag, Stack, Select, Center, 
+        Tag, Select, Center, 
         useDisclosure, AlertDialog, AlertDialogOverlay, AlertDialogHeader,
-        AlertDialogBody, AlertDialogFooter, AlertDialogContent } from "@chakra-ui/react";
+        AlertDialogBody, AlertDialogFooter, AlertDialogContent,
+        Modal, ModalOverlay, ModalHeader, ModalContent, ModalBody, ModalFooter, ModalCloseButton,
+        FormControl, FormLabel } from "@chakra-ui/react";
 
 import axios from "axios"
 import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 
 export default function DisplayListing() {
 
     const [listings, setListings] = useState([]);
     const [sortType, setSortType] = useState('default');
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [inputs, setInputs] = useState([]);
+
+    const { isOpen: isDeleteAlertOpen, onOpen: deleteAlertOpen, onClose: deleteAlertClose } = useDisclosure();
     const cancelRef = useRef();
+
+    const { isOpen: isEditOpen, onOpen: editOpen, onClose: editClose } = useDisclosure();
+
+    const {id} = useParams();
 
     const getListings = () => {
         axios.get('http://localhost:31337/api/listings/').then((response)=>{    
@@ -21,12 +30,35 @@ export default function DisplayListing() {
         });
     }
 
+    const getListing = (id) => {
+        editOpen();
+        axios.get(`http://localhost:31337/api/listing/${id}`).then((response) =>{
+            setInputs(response.data[0]);
+            console.log(response.data);
+            console.log(response.data[0].name)
+        })
+    }
+
     useEffect(() => {
         getListings();
     }, []);
 
-    const handleChange = (e) =>{
+    const handleSortChange = (e) => {
         setSortType(e.target.value);
+    }
+
+    const handleEditChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setInputs(values => ({...values, [name]: value}));
+    }
+
+    const handleSubmit = (id) =>{
+        editClose();
+        axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then(function(response){
+            console.log(response.data);
+            window.location.reload(true);
+        });
     }
 
     useEffect(() =>{
@@ -75,7 +107,7 @@ export default function DisplayListing() {
         return(
             <Flex alignContent='center' justifyContent='center' m={8}>
                 <Stack>
-                    <Select placeholder="Sort By" w={48} overflow='hidden' onChange={handleChange}>
+                    <Select placeholder="Sort By" w={48} overflow='hidden' onChange={handleSortChange}>
                         <option value="name">Name</option>
                         <option value="price-asc">Price: Ascending</option>
                         <option value="price-desc">Price: Decending</option>
@@ -97,9 +129,38 @@ export default function DisplayListing() {
                                     </HStack>
                                     <Center>
                                         <HStack>
-                                            <Button>Edit</Button>
-                                            <Button colorScheme='red' onClick={onOpen}>Delete</Button>
-                                            <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+                                            <Button onClick={() => getListing(listing.id)}>Edit</Button>
+                                            <Modal isOpen={ isEditOpen } onClose={ editClose }>
+                                                <ModalOverlay/>
+                                                <ModalContent>
+                                                    <ModalHeader>Edit Listing</ModalHeader>
+                                                    <ModalCloseButton/>
+                                                    <ModalBody>
+                                                        <form>
+                                                            <FormControl>
+                                                                <FormLabel>Name</FormLabel>
+                                                                    <Input type="text" name="name" defaultValue={inputs.name} onChange={handleEditChange}/>
+                                                                <FormLabel>Type</FormLabel>
+                                                                    <Input type="text" name="type" defaultValue={inputs.type} onChange={handleEditChange}/>
+                                                                <FormLabel>Rarity</FormLabel>
+                                                                    <Input type="text" name="rarity" defaultValue={inputs.rarity} onChange={handleEditChange}/>
+                                                                <FormLabel>Price</FormLabel>
+                                                                    <Input type="number" name="price" defaultValue={inputs.price} onChange={handleEditChange}/>
+                                                                <FormLabel>Stock</FormLabel>
+                                                                    <Input type="number" name="stock" defaultValue={inputs.stock} onChange={handleEditChange}/>
+                                                                <FormLabel>Image</FormLabel>
+                                                                    <Input type="file" name="image" onChange={handleEditChange}/>
+                                                            </FormControl>
+                                                        </form>
+                                                    </ModalBody>
+                                                    <ModalFooter>
+                                                        <Button colorScheme="blue" onClick={() => handleSubmit(listing.id) }>Edit Listing</Button>
+                                                        <Button onClick={ editClose } ml={4}>Close</Button>
+                                                    </ModalFooter>
+                                                </ModalContent>
+                                            </Modal>
+                                            <Button colorScheme='red' onClick={deleteAlertOpen}>Delete</Button>
+                                            <AlertDialog isOpen={isDeleteAlertOpen} leastDestructiveRef={cancelRef} onClose={deleteAlertClose}>
                                                 <AlertDialogOverlay>
                                                     <AlertDialogContent>
                                                         <AlertDialogHeader>
@@ -109,7 +170,7 @@ export default function DisplayListing() {
                                                             Are you sure you would like to delete this listing? You can't undo this action afterwards.
                                                         </AlertDialogBody>
                                                         <AlertDialogFooter>
-                                                            <Button ref={cancelRef} onClick={onClose}>
+                                                            <Button ref={cancelRef} onClick={deleteAlertClose}>
                                                                 Cancel
                                                             </Button>
                                                             <Button colorScheme='red' onClick={() => deleteListing(listing.id)} ml={4}>

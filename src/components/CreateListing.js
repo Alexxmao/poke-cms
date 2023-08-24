@@ -49,8 +49,8 @@ export default function CreateListing() {
                         </form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={ handleSubmit }>Create Listing</Button>
-                        <Button onClick={ onClose }>Close</Button>
+                        <Button colorScheme="blue" onClick={ handleSubmit }>Create Listing</Button>
+                        <Button onClick={ onClose } ml={4}>Close</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
