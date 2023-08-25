@@ -9,7 +9,6 @@ import { Box, Stack, HStack, Heading,
 
 import axios from "axios"
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
 
 export default function DisplayListing() {
 
@@ -21,8 +20,6 @@ export default function DisplayListing() {
     const cancelRef = useRef();
 
     const { isOpen: isEditOpen, onOpen: editOpen, onClose: editClose } = useDisclosure();
-
-    const {id} = useParams();
 
     const getListings = () => {
         axios.get('http://localhost:31337/api/listings/').then((response)=>{    
@@ -115,7 +112,7 @@ export default function DisplayListing() {
                     <SimpleGrid columns={4} spacing={8}>
                         {listings.map((listing, key) =>
                             <Box key={key} color='black' borderWidth='4px' borderRadius='lg' w={350}>
-                                <Image src={'https://bit.ly/2Z4KKcF'}/>
+                                <Image src={`http://localhost:31337/images/${listing.image}`}/>
                                 <Box m={4}>
                                     <Heading mb={4}>{listing.name}</Heading>
                                     {/* TODO: ADD COLOURED TAG FOR TYPE */}
