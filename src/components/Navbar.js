@@ -46,7 +46,10 @@ const Header = () => {
                 <MenuItem>HOME</MenuItem>
               </ReactRouterLink>
               <ReactRouterLink to="/shop">
-                <MenuItem isLast>SHOP</MenuItem>
+                <MenuItem>SHOP</MenuItem>
+              </ReactRouterLink>
+              <ReactRouterLink to='/login'>
+                <MenuItem isLast>LOGIN</MenuItem>
               </ReactRouterLink>
             </Flex>
           </Box>
