@@ -58,6 +58,7 @@ export default function CreateListing() {
         } else {
             onClose();
             const formData = new FormData();
+            formData.append('action', 'create');
             formData.append('name', name);
             formData.append('type', type);
             formData.append('rarity', rarity);

@@ -49,7 +49,7 @@ const Header = () => {
                 <MenuItem>SHOP</MenuItem>
               </ReactRouterLink>
               <ReactRouterLink to='/login'>
-                <MenuItem isLast>LOGIN</MenuItem>
+                <MenuItem isLast>ACCOUNT</MenuItem>
               </ReactRouterLink>
             </Flex>
           </Box>
