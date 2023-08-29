@@ -6,8 +6,6 @@ import { useState } from 'react';
 export default function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [responseMessage, setResponseMessage] = useState('');
-    const [responseColor, setResponseColor] = useState('red');
     
     const toast = useToast();
     const navigate = useNavigate();
@@ -35,11 +33,20 @@ export default function Login(){
             formData.append("password", password);
             axios.post(`http://localhost:31337/api/login`, formData).then((response) => {
                 console.log(response.data);
-                setResponseMessage(response.data);
                 if(response.data === "Invalid Credentials!"){
-                    setResponseColor("red");
+                    toast({
+                        title: 'Invalid Credentials!',
+                        status: 'error',
+                        duration: '2000',
+                        isClosable: true
+                    })
                 } else {
-                    setResponseColor("green");
+                    toast({
+                        title: 'Log In Successful! Redirecting...',
+                        status: 'success',
+                        duration: '2000',
+                        isClosable: true
+                    })
                     setTimeout(() =>{
                         navigate('/shop/admin')
                     }, 2000)
@@ -59,7 +66,6 @@ export default function Login(){
                     <Input type="password" name="password" mb={4} onChange={(e) => setPassword(e.target.value)}/>
                     <Button colorScheme="blue" w="100%" mt={4} onClick={handleSubmit}>Login</Button>
                 </FormControl>
-                <Text mt={4} color={responseColor}>{responseMessage}</Text>
                 <Stack mt={8}>
                     <Link href="/signup" fontWeight='bold'>Don&apos;t Have an Account?</Link>
                     <Link fontWeight='bold'>Forgot Password?</Link>
