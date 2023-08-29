@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Input, Button, useDisclosure, Modal, ModalOverl
 import axios from "axios";
 import { useState } from "react";
 
-export default function CreateListing() {
+export default function CreateListing({admin}) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const [name, setName] = useState('');
@@ -78,36 +78,40 @@ export default function CreateListing() {
 
     return (
         <div>
-            <Button onClick={ onOpen }>Create Listing</Button>
-            <Modal isOpen={ isOpen } onClose={ onClose }>
-                <ModalOverlay/>
-                <ModalContent>
-                    <ModalHeader>Create Listing</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody>
-                        <form>
-                            <FormControl>
-                                <FormLabel>Name</FormLabel>
-                                    <Input type="text" name="name" onChange={(e) => setName(e.target.value)}/>
-                                <FormLabel>Type</FormLabel>
-                                    <Input type="text" name="type" onChange={(e) => setType(e.target.value)}/>
-                                <FormLabel>Rarity</FormLabel>
-                                    <Input type="text" name="rarity" onChange={(e) => setRarity(e.target.value)}/>
-                                <FormLabel>Price</FormLabel>
-                                    <Input type="number" name="price" onChange={(e) => setPrice(e.target.value)}/>
-                                <FormLabel>Stock</FormLabel>
-                                    <Input type="number" name="stock" onChange={(e) => setStock(e.target.value)}/>
-                                <FormLabel>Image</FormLabel>
-                                    <Input type="file" name="image" onChange={(e) => setImage(e.target.files[0])}/>
-                            </FormControl>
-                        </form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="blue" onClick={ handleSubmit }>Create Listing</Button>
-                        <Button onClick={ onClose } ml={4}>Close</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+        { admin ? 
+            <div>
+                <Button onClick={ onOpen }>Create Listing</Button>
+                <Modal isOpen={ isOpen } onClose={ onClose }>
+                    <ModalOverlay/>
+                    <ModalContent>
+                        <ModalHeader>Create Listing</ModalHeader>
+                        <ModalCloseButton/>
+                        <ModalBody>
+                            <form>
+                                <FormControl>
+                                    <FormLabel>Name</FormLabel>
+                                        <Input type="text" name="name" onChange={(e) => setName(e.target.value)}/>
+                                    <FormLabel>Type</FormLabel>
+                                        <Input type="text" name="type" onChange={(e) => setType(e.target.value)}/>
+                                    <FormLabel>Rarity</FormLabel>
+                                        <Input type="text" name="rarity" onChange={(e) => setRarity(e.target.value)}/>
+                                    <FormLabel>Price</FormLabel>
+                                        <Input type="number" name="price" onChange={(e) => setPrice(e.target.value)}/>
+                                    <FormLabel>Stock</FormLabel>
+                                        <Input type="number" name="stock" onChange={(e) => setStock(e.target.value)}/>
+                                    <FormLabel>Image</FormLabel>
+                                        <Input type="file" name="image" onChange={(e) => setImage(e.target.files[0])}/>
+                                </FormControl>
+                            </form>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme="blue" onClick={ handleSubmit }>Create Listing</Button>
+                            <Button onClick={ onClose } ml={4}>Close</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            </div>
+        : <></> }
         </div>
     )
 }

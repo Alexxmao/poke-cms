@@ -10,7 +10,7 @@ import { Box, Stack, HStack, Heading,
 import axios from "axios"
 import { useState, useEffect, useRef } from "react";
 
-export default function DisplayListing() {
+export default function DisplayListing({admin}) {
 
     const [listings, setListings] = useState([]);
     const [sortType, setSortType] = useState('default');
@@ -124,61 +124,63 @@ export default function DisplayListing() {
                                         <Input type='number' placeholder="Amount"/>
                                         <Button fontSize='xs'>Add to Cart</Button>
                                     </HStack>
-                                    <Center>
-                                        <HStack>
-                                            <Button onClick={() => getListing(listing.id)}>Edit</Button>
-                                            <Modal isOpen={ isEditOpen } onClose={ editClose }>
-                                                <ModalOverlay/>
-                                                <ModalContent>
-                                                    <ModalHeader>Edit Listing</ModalHeader>
-                                                    <ModalCloseButton/>
-                                                    <ModalBody>
-                                                        <form>
-                                                            <FormControl>
-                                                                <FormLabel>Name</FormLabel>
-                                                                    <Input type="text" name="name" defaultValue={inputs.name} onChange={handleEditChange}/>
-                                                                <FormLabel>Type</FormLabel>
-                                                                    <Input type="text" name="type" defaultValue={inputs.type} onChange={handleEditChange}/>
-                                                                <FormLabel>Rarity</FormLabel>
-                                                                    <Input type="text" name="rarity" defaultValue={inputs.rarity} onChange={handleEditChange}/>
-                                                                <FormLabel>Price</FormLabel>
-                                                                    <Input type="number" name="price" defaultValue={inputs.price} onChange={handleEditChange}/>
-                                                                <FormLabel>Stock</FormLabel>
-                                                                    <Input type="number" name="stock" defaultValue={inputs.stock} onChange={handleEditChange}/>
-                                                                <FormLabel>Image</FormLabel>
-                                                                    <Input type="file" name="image" onChange={handleEditChange}/>
-                                                            </FormControl>
-                                                        </form>
-                                                    </ModalBody>
-                                                    <ModalFooter>
-                                                        <Button colorScheme="blue" onClick={() => handleSubmit(listing.id) }>Edit Listing</Button>
-                                                        <Button onClick={ editClose } ml={4}>Close</Button>
-                                                    </ModalFooter>
-                                                </ModalContent>
-                                            </Modal>
-                                            <Button colorScheme='red' onClick={deleteAlertOpen}>Delete</Button>
-                                            <AlertDialog isOpen={isDeleteAlertOpen} leastDestructiveRef={cancelRef} onClose={deleteAlertClose}>
-                                                <AlertDialogOverlay>
-                                                    <AlertDialogContent>
-                                                        <AlertDialogHeader>
-                                                            Delete Listing
-                                                        </AlertDialogHeader>
-                                                        <AlertDialogBody>
-                                                            Are you sure you would like to delete this listing? You can't undo this action afterwards.
-                                                        </AlertDialogBody>
-                                                        <AlertDialogFooter>
-                                                            <Button ref={cancelRef} onClick={deleteAlertClose}>
-                                                                Cancel
-                                                            </Button>
-                                                            <Button colorScheme='red' onClick={() => deleteListing(listing.id)} ml={4}>
-                                                                Delete
-                                                            </Button>
-                                                        </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                </AlertDialogOverlay>
-                                            </AlertDialog>
-                                        </HStack>
-                                    </Center>
+                                    { admin ?  
+                                        <Center>
+                                            <HStack>
+                                                <Button onClick={() => getListing(listing.id)}>Edit</Button>
+                                                <Modal isOpen={ isEditOpen } onClose={ editClose }>
+                                                    <ModalOverlay/>
+                                                    <ModalContent>
+                                                        <ModalHeader>Edit Listing</ModalHeader>
+                                                        <ModalCloseButton/>
+                                                        <ModalBody>
+                                                            <form>
+                                                                <FormControl>
+                                                                    <FormLabel>Name</FormLabel>
+                                                                        <Input type="text" name="name" defaultValue={inputs.name} onChange={handleEditChange}/>
+                                                                    <FormLabel>Type</FormLabel>
+                                                                        <Input type="text" name="type" defaultValue={inputs.type} onChange={handleEditChange}/>
+                                                                    <FormLabel>Rarity</FormLabel>
+                                                                        <Input type="text" name="rarity" defaultValue={inputs.rarity} onChange={handleEditChange}/>
+                                                                    <FormLabel>Price</FormLabel>
+                                                                        <Input type="number" name="price" defaultValue={inputs.price} onChange={handleEditChange}/>
+                                                                    <FormLabel>Stock</FormLabel>
+                                                                        <Input type="number" name="stock" defaultValue={inputs.stock} onChange={handleEditChange}/>
+                                                                    <FormLabel>Image</FormLabel>
+                                                                        <Input type="file" name="image" onChange={handleEditChange}/>
+                                                                </FormControl>
+                                                            </form>
+                                                        </ModalBody>
+                                                        <ModalFooter>
+                                                            <Button colorScheme="blue" onClick={() => handleSubmit(listing.id) }>Edit Listing</Button>
+                                                            <Button onClick={ editClose } ml={4}>Close</Button>
+                                                        </ModalFooter>
+                                                    </ModalContent>
+                                                </Modal>
+                                                <Button colorScheme='red' onClick={deleteAlertOpen}>Delete</Button>
+                                                <AlertDialog isOpen={isDeleteAlertOpen} leastDestructiveRef={cancelRef} onClose={deleteAlertClose}>
+                                                    <AlertDialogOverlay>
+                                                        <AlertDialogContent>
+                                                            <AlertDialogHeader>
+                                                                Delete Listing
+                                                            </AlertDialogHeader>
+                                                            <AlertDialogBody>
+                                                                Are you sure you would like to delete this listing? You can't undo this action afterwards.
+                                                            </AlertDialogBody>
+                                                            <AlertDialogFooter>
+                                                                <Button ref={cancelRef} onClick={deleteAlertClose}>
+                                                                    Cancel
+                                                                </Button>
+                                                                <Button colorScheme='red' onClick={() => deleteListing(listing.id)} ml={4}>
+                                                                    Delete
+                                                                </Button>
+                                                            </AlertDialogFooter>
+                                                        </AlertDialogContent>
+                                                    </AlertDialogOverlay>
+                                                </AlertDialog>
+                                            </HStack>
+                                        </Center>
+                                    : <></> }
                                 </Box>
                             </Box>
                         )}
