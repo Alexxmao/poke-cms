@@ -29,7 +29,7 @@ export default function DisplayListing({admin}) {
 
     const getListing = (id) => {
         editOpen();
-        axios.get(`http://localhost:31337/api/listing/${id}`).then((response) =>{
+        axios.get(`http://localhost:31337/api/listing/${id}`).then((response) => {
             setInputs(response.data[0]);
             console.log(response.data);
             console.log(response.data[0].name)
@@ -52,7 +52,7 @@ export default function DisplayListing({admin}) {
 
     const handleSubmit = (id) =>{
         editClose();
-        axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then(function(response){
+        axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then((response) => {
             console.log(response.data);
             window.location.reload(true);
         });
@@ -146,8 +146,6 @@ export default function DisplayListing({admin}) {
                                                                         <Input type="number" name="price" defaultValue={inputs.price} onChange={handleEditChange}/>
                                                                     <FormLabel>Stock</FormLabel>
                                                                         <Input type="number" name="stock" defaultValue={inputs.stock} onChange={handleEditChange}/>
-                                                                    <FormLabel>Image</FormLabel>
-                                                                        <Input type="file" name="image" onChange={handleEditChange}/>
                                                                 </FormControl>
                                                             </form>
                                                         </ModalBody>
