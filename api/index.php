@@ -44,7 +44,7 @@ switch ($method) {
                 $image = $_FILES['image']['name'];
                 $image_temp = $_FILES['image']['tmp_name'];
                 $imageType = $_FILES['image']['type'];
-                $destination = $_SERVER['DOCUMENT_ROOT'] . '/images' . "/" . $image;
+                $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads' . "/" . $image;
                 $query = "INSERT INTO pokemon(id, name, type, rarity, price, stock, image, created_at, updated_at) VALUES(null, :name, :type, :rarity, :price, :stock, :image, :created_at, :updated_at)";
                 $stmt = $db->prepare($query);
                 $created_at = date('Y-m-d');

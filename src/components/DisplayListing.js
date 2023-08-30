@@ -54,7 +54,7 @@ export default function DisplayListing({admin}) {
         editClose();
         axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then((response) => {
             console.log(response.data);
-            window.location.reload(true);
+            // window.location.reload(true);
         });
     }
 
@@ -112,7 +112,7 @@ export default function DisplayListing({admin}) {
                     <SimpleGrid columns={4} spacing={8}>
                         {listings.map((listing, key) =>
                             <Box key={key} color='black' borderWidth='4px' borderRadius='lg' w={350}>
-                                <Image src={`http://localhost:31337/images/${listing.image}`}/>
+                                <Image src={`http://localhost:31337/uploads/${listing.image}`}/>
                                 <Box m={4}>
                                     <Heading mb={4}>{listing.name}</Heading>
                                     {/* TODO: ADD COLOURED TAG FOR TYPE */}
