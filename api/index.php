@@ -40,7 +40,7 @@ switch ($method) {
                 $rarity = sanitizeInput($_POST['rarity']);
                 $price = sanitizeInput($_POST['price']);
                 $stock = sanitizeInput($_POST['stock']);
-                $allowedMimeTypes = array('image/jpeg', 'image/png', 'image/gif');
+                $allowedMimeTypes = array('image/jpeg', 'image/png', 'image/gif', 'image/webp');
                 $image = $_FILES['image']['name'];
                 $image_temp = $_FILES['image']['tmp_name'];
                 $imageType = $_FILES['image']['type'];

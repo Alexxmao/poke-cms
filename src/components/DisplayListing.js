@@ -54,7 +54,7 @@ export default function DisplayListing({admin}) {
         editClose();
         axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then((response) => {
             console.log(response.data);
-            // window.location.reload(true);
+            window.location.reload(true);
         });
     }
 
@@ -94,6 +94,7 @@ export default function DisplayListing({admin}) {
     },[sortType]);
 
     const deleteListing = (id) => {
+        deleteAlertClose();
         axios.delete(`http://localhost:31337/api/listings/${id}/delete`).then((response) =>{
             console.log(response.data);
             window.location.reload(true);
