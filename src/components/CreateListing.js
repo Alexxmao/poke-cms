@@ -1,8 +1,10 @@
 import { FormControl, FormLabel, Input, Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function CreateListing({admin}) {
+    const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const [name, setName] = useState('');
@@ -70,7 +72,7 @@ export default function CreateListing({admin}) {
                 headers:{'Content-Type':"multipart/form-data"},
             }).then((response) => {
                 console.log(response.data);
-                window.location.reload(true);
+                navigate('/');
             });
         }
         

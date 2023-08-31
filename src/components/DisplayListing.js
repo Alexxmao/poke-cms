@@ -6,12 +6,12 @@ import { Box, Stack, HStack, Heading,
         AlertDialogBody, AlertDialogFooter, AlertDialogContent,
         Modal, ModalOverlay, ModalHeader, ModalContent, ModalBody, ModalFooter, ModalCloseButton,
         FormControl, FormLabel } from "@chakra-ui/react";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { useState, useEffect, useRef } from "react";
 
 export default function DisplayListing({admin}) {
-
+    const navigate = useNavigate();
     const [listings, setListings] = useState([]);
     const [sortType, setSortType] = useState('default');
     const [inputs, setInputs] = useState([]);
@@ -54,7 +54,7 @@ export default function DisplayListing({admin}) {
         editClose();
         axios.put(`http://poke-cms.orgfree.com/api/listing/${id}/edit`, inputs).then((response) => {
             console.log(response.data);
-            window.location.reload(true);
+            navigate('/');
         });
     }
 
@@ -97,7 +97,7 @@ export default function DisplayListing({admin}) {
         deleteAlertClose();
         axios.delete(`http://poke-cms.orgfree.com/api/listings/${id}/delete`).then((response) =>{
             console.log(response.data);
-            window.location.reload(true);
+            navigate('/');
         });
     }
     
