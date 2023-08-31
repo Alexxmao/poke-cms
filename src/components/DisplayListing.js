@@ -22,14 +22,14 @@ export default function DisplayListing({admin}) {
     const { isOpen: isEditOpen, onOpen: editOpen, onClose: editClose } = useDisclosure();
 
     const getListings = () => {
-        axios.get('http://localhost:31337/api/listings/').then((response)=>{    
+        axios.get('http://poke-cms.orgfree.com/api/listings/').then((response)=>{    
             setListings(response.data);
         });
     }
 
     const getListing = (id) => {
         editOpen();
-        axios.get(`http://localhost:31337/api/listing/${id}`).then((response) => {
+        axios.get(`http://poke-cms.orgfree.com/api/listing/${id}`).then((response) => {
             setInputs(response.data[0]);
             console.log(response.data);
             console.log(response.data[0].name)
@@ -52,7 +52,7 @@ export default function DisplayListing({admin}) {
 
     const handleSubmit = (id) =>{
         editClose();
-        axios.put(`http://localhost:31337/api/listing/${id}/edit`, inputs).then((response) => {
+        axios.put(`http://poke-cms.orgfree.com/api/listing/${id}/edit`, inputs).then((response) => {
             console.log(response.data);
             window.location.reload(true);
         });
@@ -95,7 +95,7 @@ export default function DisplayListing({admin}) {
 
     const deleteListing = (id) => {
         deleteAlertClose();
-        axios.delete(`http://localhost:31337/api/listings/${id}/delete`).then((response) =>{
+        axios.delete(`http://poke-cms.orgfree.com/api/listings/${id}/delete`).then((response) =>{
             console.log(response.data);
             window.location.reload(true);
         });
@@ -113,7 +113,7 @@ export default function DisplayListing({admin}) {
                     <SimpleGrid columns={4} spacing={8}>
                         {listings.map((listing, key) =>
                             <Box key={key} color='black' borderWidth='4px' borderRadius='lg' w={350}>
-                                <Image src={`http://localhost:31337/uploads/${listing.image}`}/>
+                                <Image src={`http://poke-cms.orgfree.com/uploads/${listing.image}`}/>
                                 <Box m={4}>
                                     <Heading mb={4}>{listing.name}</Heading>
                                     {/* TODO: ADD COLOURED TAG FOR TYPE */}

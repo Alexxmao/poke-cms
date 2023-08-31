@@ -66,7 +66,7 @@ export default function CreateListing({admin}) {
             formData.append('stock', stock);
             formData.append('image', image);
             e.preventDefault();
-            axios.post('http://localhost:31337/api/listings/save', formData, {
+            axios.post('http://poke-cms.orgfree.com/api/listings/save', formData, {
                 headers:{'Content-Type':"multipart/form-data"},
             }).then((response) => {
                 console.log(response.data);

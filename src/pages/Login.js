@@ -1,4 +1,4 @@
-import { Flex, Box, Heading, FormControl, FormLabel, Input, Button, useToast, Link, Stack, Text} from "@chakra-ui/react";
+import { Flex, Box, Heading, FormControl, FormLabel, Input, Button, useToast, Link, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
@@ -31,7 +31,7 @@ export default function Login(){
             formData.append("action", "login");
             formData.append("username", username);
             formData.append("password", password);
-            axios.post(`http://localhost:31337/api/login`, formData).then((response) => {
+            axios.post(`http://poke-cms.orgfree.com/api/login`, formData).then((response) => {
                 console.log(response.data);
                 if(response.data === "Invalid Credentials!"){
                     toast({
